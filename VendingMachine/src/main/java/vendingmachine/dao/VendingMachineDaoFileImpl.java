@@ -69,7 +69,7 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
     }
     @Override
     public void updateBalance(BigDecimal balance){
-        
+        vm.setBalance(balance);
     }
 
     private Item unmarshallItem(String itemAsText) {
