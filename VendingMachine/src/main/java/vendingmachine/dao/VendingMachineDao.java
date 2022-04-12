@@ -32,6 +32,7 @@ public interface VendingMachineDao {
     Item getItem(String itemName)
             throws VendingMachinePersistenceException;
     
-    Item decrementItem(String itemName)
+    Item decrementItem(String itemName) 
+            
             throws VendingMachinePersistenceException;
 }
