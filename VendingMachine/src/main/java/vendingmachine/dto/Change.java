@@ -10,12 +10,15 @@ import java.math.RoundingMode;
 
 /**
  *
- * @author andri
+ * A class encapsulating the idea of the currency returned to the user after 
+ * they have made a purchase. It takes an amount, divides it into the appropriate
+ * coinage, and returns a summary.
  */
 public class Change
     {
     private BigDecimal amount;
     private BigDecimal pennies, nickels, dimes, quarters;
+    // Enumerated constants to represent the value of coins
     public enum Denomination {
     
         QUARTER(BigDecimal.valueOf(.25)),
@@ -30,6 +33,7 @@ public class Change
         }
     }
     
+    // Updates the number of each denomination of currency based on the amount variable
     public void setChange()
         {
             quarters = amount.divide(Denomination.QUARTER.value, 0, RoundingMode.DOWN);
@@ -44,6 +48,8 @@ public class Change
             pennies = lessNickels.divide(Denomination.PENNY.value, 0, RoundingMode.DOWN);
             
         }
+    
+    // Returns a string allowing the user to know the denominations of their change
     public String getChange()
         {
             String change = "Your change is " + quarters + " quarters, " + dimes + " dimes " + nickels + " nickels and " + pennies + " pennies.";

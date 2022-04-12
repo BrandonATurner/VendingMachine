@@ -16,7 +16,7 @@ import vendingmachine.ui.VendingMachineView;
 
 /**
  *
- * @author andri
+ * The controller orchestrates the functions of the Service Layer and View
  */
 public class VendingMachineController {
 
@@ -58,7 +58,7 @@ public class VendingMachineController {
                         unknownCommand();
                 }
 
-            } catch (VendingMachinePersistenceException
+            } catch (VendingMachinePersistenceException // Exceptions based on missing inventory, funds, or files
                     | NoItemInventoryException
                     | InsufficientFundsException e) {
                 view.displayErrorMessage(e.getMessage());
@@ -67,9 +67,7 @@ public class VendingMachineController {
         exitMessage();
     }
 
-    /* private int getMenuSelection() {
-        return view.printMenuAndGetSelection();
-    }*/
+    // Uses a lambda function to list all of the items in the machine's inventory
     private void listItems() throws VendingMachinePersistenceException {
         view.displayDisplayAllBanner();
         List<Item> itemList = service.getAllItems().stream()
@@ -77,14 +75,14 @@ public class VendingMachineController {
                 .collect(Collectors.toList());
         view.displayItemList(itemList);
     }
-
+    // Prompts the user for the name of an item and then displays its details
     private void viewItem() throws VendingMachinePersistenceException {
         view.displayItemBanner();
         String itemName = view.getItemNameChoice();
         Item item = service.getItem(itemName);
         view.displayItem(item);
     }
-
+    // Prompts for the name of the item to buy, checks funds, subtracts cost & updates inventory
     private void buyItem() throws VendingMachinePersistenceException,
             NoItemInventoryException,
             InsufficientFundsException {
@@ -95,13 +93,13 @@ public class VendingMachineController {
         view.displayBuyItemSuccessBanner();
 
     }
-
+    // Displays the remaining funds
     private void displayBalance() {
         view.displayBalanceBanner();
         BigDecimal balance = service.getBalance();
         view.displayBalance(balance);
     }
-
+    // Simulates the addition of funds
     private void addMoney() {
         view.displayAddMoneyBanner();
         BigDecimal addedFunds = view.getAddedMoney();
@@ -109,11 +107,11 @@ public class VendingMachineController {
         view.displayAddMoneySuccessBanner();
 
     }
-
+    // Let's the user know their command is not supported
     private void unknownCommand() {
         view.displayUnknownCommandBanner();
     }
-
+    // Displays Goodbye!!! when exiting the program
     private void exitMessage() {
         view.displayExitBanner();
     }

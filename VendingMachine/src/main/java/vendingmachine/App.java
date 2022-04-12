@@ -18,7 +18,8 @@ import vendingmachine.ui.VendingMachineView;
 
 /**
  *
- * @author andri
+ * A vending machine program that accepts values as dollars, conducts transactions, and keeps track of 
+ * remaining inventory and funds.
  */
 public class App {
 
