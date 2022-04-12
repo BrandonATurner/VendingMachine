@@ -40,7 +40,7 @@ public class VendingMachineController {
                         viewItem();
                         break;
                     case 3:
-                        System.out.print("ADD MONEY");
+                        addMoney();
                         break;
                     case 4:
                         displayBalance();
@@ -62,7 +62,6 @@ public class VendingMachineController {
     /* private int getMenuSelection() {
         return view.printMenuAndGetSelection();
     }*/
-
     private void listItems() throws VendingMachineDaoException {
         view.displayDisplayAllBanner();
         List<Item> itemList = dao.getAllItems();
@@ -80,6 +79,14 @@ public class VendingMachineController {
         view.displayBalanceBanner();
         BigDecimal balance = service.getBalance();
         view.displayBalance(balance);
+    }
+
+    private void addMoney() {
+        view.displayAddMoneyBanner();
+        BigDecimal addedFunds = view.getAddedMoney();
+        service.updateBalance();
+        view.displayAddMoneySuccessBanner();
+        
     }
 
     private void unknownCommand() {
