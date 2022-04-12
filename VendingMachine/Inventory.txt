@@ -1,0 +1,5 @@
+Herr's Chips::1.90::8
+Cherry Pop Tarts::2.45::12
+Honey Buns::2.25::5
+Sprite::1.95::6
+Gummy Bears::4.70::11

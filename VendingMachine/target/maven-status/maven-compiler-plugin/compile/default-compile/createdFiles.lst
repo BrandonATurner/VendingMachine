@@ -1,0 +1,11 @@
+vendingmachine\App.class
+vendingmachine\ui\VendingMachineView.class
+vendingmachine\ui\UserIO.class
+vendingmachine\dao\VendingMachineDaoException.class
+vendingmachine\controller\VendingMachineController.class
+vendingmachine\dao\VendingMachineDao.class
+vendingmachine\ui\UserIOConsoleImpl.class
+vendingmachine\dto\Change$Denomination.class
+vendingmachine\dao\VendingMachineDaoFileImpl.class
+vendingmachine\dto\Change.class
+vendingmachine\dto\Item.class
