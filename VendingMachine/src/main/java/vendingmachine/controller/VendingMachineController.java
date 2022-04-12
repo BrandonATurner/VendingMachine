@@ -7,10 +7,7 @@ package vendingmachine.controller;
 import java.util.List;
 import vendingmachine.dao.VendingMachineDao;
 import vendingmachine.dao.VendingMachineDaoException;
-import vendingmachine.dao.VendingMachineDaoFileImpl;
 import vendingmachine.dto.Item;
-import vendingmachine.ui.UserIO;
-import vendingmachine.ui.UserIOConsoleImpl;
 import vendingmachine.ui.VendingMachineView;
 
 /**
@@ -27,23 +24,15 @@ public class VendingMachineController {
         this.view = view;
     }
 
-    private UserIO io = new UserIOConsoleImpl();
+    
 
     public void run() {
         boolean keepGoing = true;
-        int menuSelection = 0;
-        io.print("");
+        int menuSelection;
+        
         
         while (keepGoing) {
-            io.print("Main Menu");
-            io.print("1. List Items");
-            io.print("2. Buy Item");
-            io.print("3. Add Money");
-            io.print("4. Show Money");
-            io.print("5. Exit");
-
-            menuSelection = io.readInt("Please select from the"
-                    + " above choices.", 1, 5);
+            menuSelection = view.printMenuAndGetSelection();
             try {
                 switch (menuSelection) {
                     case 1:
@@ -53,10 +42,10 @@ public class VendingMachineController {
                         viewItem();
                         break;
                     case 3:
-                        io.print("ADD MONEY");
+                        System.out.print("ADD MONEY");
                         break;
                     case 4:
-                        io.print("SHOW MONEY");
+                        System.out.print("SHOW MONEY");
                         break;
                     case 5:
                         keepGoing = false;
