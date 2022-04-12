@@ -38,15 +38,26 @@ public class VendingMachineServiceLayerImpl implements VendingMachineServiceLaye
     }
 
     @Override
-    public void buyItem(String itemName) {
-        dao.buyItem(itemName);
+    public Item buyItem(String itemName) throws
+            VendingMachinePersistenceException,
+            NoItemInventoryException {
+        if (Integer.parseInt(dao.getItem(itemName).getItemInventory()) <= 0) {
+            throw new NoItemInventoryException("This item is not in stock");
+        }
+
+        return dao.decrementItem(itemName);
+
     }
+
     @Override
     public void updateBalance(BigDecimal balance) {
         dao.updateBalance(balance);
     }
+
     @Override
-    public BigDecimal getBalance(){
+    public BigDecimal getBalance() {
         return dao.getBalance();
     }
+
+    
 }

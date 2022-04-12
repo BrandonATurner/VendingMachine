@@ -32,8 +32,12 @@ public interface VendingMachineDao {
      */
     Item getItem(String itemName)
             throws VendingMachinePersistenceException;
+    
+    Item decrementItem(String itemName) 
+            
+            throws VendingMachinePersistenceException;
 
-    public void buyItem(String itemName);
+    
     public void updateBalance(BigDecimal balance);
     public BigDecimal getBalance();
 }
