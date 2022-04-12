@@ -23,12 +23,13 @@ public class VendingMachineView {
     public int printMenuAndGetSelection() {
         io.print("Main Menu");
         io.print("1. List Items");
-        io.print("2. Buy Item");
+        io.print("2. View Item");
         io.print("3. Add Money");
         io.print("4. Show Money");
-        io.print("5. Exit");
+        io.print("5. Buy Item");
+        io.print("6. Exit");
 
-        return io.readInt("Please select from the above choices.", 1, 5);
+        return io.readInt("Please select from the above choices.", 1, 6);
     }
 
     public void displayItemList(List<Item> itemList) {
@@ -66,8 +67,14 @@ public class VendingMachineView {
         return io.readBigDecimal("How much money is being added?");
     }
 
-    public void displayDisplayItemBanner() {
+    public void displayItemBanner() {
         io.print("=== Display Item ===");
+    }
+    public void displayBuyItemBanner() {
+        io.print("=== Buy Item ===");
+    }
+    public void displayBuyItemSuccessBanner() {
+        io.print("=== Item Purchased ===");
     }
 
     public String getItemNameChoice() {
