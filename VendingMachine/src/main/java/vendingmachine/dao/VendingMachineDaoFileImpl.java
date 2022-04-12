@@ -60,7 +60,6 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
         decrementedItem.setItemInventory(Integer.toString(invAmount));
         items.put(itemName, decrementedItem);
         writeRoster();
-        //return decrementedItem;
     
     }
     
