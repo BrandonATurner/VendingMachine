@@ -4,6 +4,8 @@
  */
 package vendingmachine.ui;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author andri
@@ -29,4 +31,5 @@ public interface UserIO {
     long readLong(String prompt, long min, long max);
 
     String readString(String prompt);
+    public BigDecimal readBigDecimal(String msgPrompt);
 }

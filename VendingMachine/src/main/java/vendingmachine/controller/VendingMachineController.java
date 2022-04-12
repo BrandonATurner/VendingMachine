@@ -4,13 +4,11 @@
  */
 package vendingmachine.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 import vendingmachine.dao.VendingMachineDao;
 import vendingmachine.dao.VendingMachineDaoException;
-import vendingmachine.dao.VendingMachineDaoFileImpl;
 import vendingmachine.dto.Item;
-import vendingmachine.ui.UserIO;
-import vendingmachine.ui.UserIOConsoleImpl;
 import vendingmachine.ui.VendingMachineView;
 
 /**
@@ -27,23 +25,12 @@ public class VendingMachineController {
         this.view = view;
     }
 
-    private UserIO io = new UserIOConsoleImpl();
-
     public void run() {
         boolean keepGoing = true;
-        int menuSelection = 0;
-        io.print("");
-        
-        while (keepGoing) {
-            io.print("Main Menu");
-            io.print("1. List Items");
-            io.print("2. Buy Item");
-            io.print("3. Add Money");
-            io.print("4. Show Money");
-            io.print("5. Exit");
+        int menuSelection;
 
-            menuSelection = io.readInt("Please select from the"
-                    + " above choices.", 1, 5);
+        while (keepGoing) {
+            menuSelection = view.printMenuAndGetSelection();
             try {
                 switch (menuSelection) {
                     case 1:
@@ -53,10 +40,10 @@ public class VendingMachineController {
                         viewItem();
                         break;
                     case 3:
-                        io.print("ADD MONEY");
+                        addMoney();
                         break;
                     case 4:
-                        io.print("SHOW MONEY");
+                        displayBalance();
                         break;
                     case 5:
                         keepGoing = false;
@@ -65,16 +52,16 @@ public class VendingMachineController {
                         unknownCommand();
                 }
 
-           
-            exitMessage();
-        } catch (VendingMachineDaoException e) {
-            view.displayErrorMessage(e.getMessage());
+                exitMessage();
+            } catch (VendingMachineDaoException e) {
+                view.displayErrorMessage(e.getMessage());
             }
-        }}
-        /* private int getMenuSelection() {
+        }
+    }
+
+    /* private int getMenuSelection() {
         return view.printMenuAndGetSelection();
     }*/
-        
     private void listItems() throws VendingMachineDaoException {
         view.displayDisplayAllBanner();
         List<Item> itemList = dao.getAllItems();
@@ -86,6 +73,20 @@ public class VendingMachineController {
         String itemName = view.getItemNameChoice();
         Item item = dao.getItem(itemName);
         view.displayItem(item);
+    }
+
+    private void displayBalance() {
+        view.displayBalanceBanner();
+        //BigDecimal balance = service.getBalance();
+        //view.displayBalance(balance);
+    }
+
+    private void addMoney() {
+        view.displayAddMoneyBanner();
+        BigDecimal addedFunds = view.getAddedMoney();
+        //service.updateBalance();
+        view.displayAddMoneySuccessBanner();
+        
     }
 
     private void unknownCommand() {

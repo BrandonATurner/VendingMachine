@@ -8,6 +8,7 @@ package vendingmachine.ui;
  *
  * @author andri
  */
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class UserIOConsoleImpl implements UserIO {
@@ -63,6 +64,25 @@ public class UserIOConsoleImpl implements UserIO {
                 invalidInput = false; // or you can use 'break;'
             } catch (NumberFormatException e) {
                 // If it explodes, it'll go here and do this.
+                this.print("Input error. Please try again.");
+            }
+        }
+        return num;
+    }
+    @Override
+    public BigDecimal readBigDecimal(String msgPrompt) {
+        boolean invalidInput = true;
+        BigDecimal num = null;
+        while (invalidInput) {
+            try {
+                // print the message msgPrompt (ex: asking for the # of cats!)
+                String stringValue = this.readString(msgPrompt);
+                // Get the input line, and try and parse
+                num = new BigDecimal(stringValue); // if it's 'bob' it'll break
+                invalidInput = false; // or you can use 'break;'
+            } catch (NumberFormatException e) {
+                // If it explodes, it'll go here and do this.
+                
                 this.print("Input error. Please try again.");
             }
         }
