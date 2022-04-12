@@ -19,7 +19,7 @@ public interface VendingMachineDao {
      * @return List containing all students in the roster.
      */
     List<Item> getAllItems()
-            throws VendingMachineDaoException;
+            throws VendingMachinePersistenceException;
     
     /**
      * Returns the item object associated with the given item name.
@@ -30,5 +30,5 @@ public interface VendingMachineDao {
      * null if no such item exists
      */
     Item getItem(String itemName)
-            throws VendingMachineDaoException;
+            throws VendingMachinePersistenceException;
 }

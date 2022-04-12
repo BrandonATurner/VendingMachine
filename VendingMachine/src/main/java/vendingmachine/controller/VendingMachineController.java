@@ -7,8 +7,12 @@ package vendingmachine.controller;
 import java.math.BigDecimal;
 import java.util.List;
 import vendingmachine.dao.VendingMachineDao;
-import vendingmachine.dao.VendingMachineDaoException;
+import vendingmachine.dao.VendingMachinePersistenceException;
+import vendingmachine.dao.VendingMachineDaoFileImpl;
 import vendingmachine.dto.Item;
+import vendingmachine.service.VendingMachineServiceLayer;
+import vendingmachine.ui.UserIO;
+import vendingmachine.ui.UserIOConsoleImpl;
 import vendingmachine.ui.VendingMachineView;
 
 /**
@@ -18,10 +22,10 @@ import vendingmachine.ui.VendingMachineView;
 public class VendingMachineController {
 
     private VendingMachineView view;
-    private VendingMachineDao dao;
+    private VendingMachineServiceLayer service;
 
-    public VendingMachineController(VendingMachineDao dao, VendingMachineView view) {
-        this.dao = dao;
+    public VendingMachineController(VendingMachineServiceLayer service, VendingMachineView view) {
+        this.service = service;
         this.view = view;
     }
 
@@ -55,9 +59,9 @@ public class VendingMachineController {
                         unknownCommand();
                 }
 
-                exitMessage();
-            } catch (VendingMachineDaoException e) {
-                view.displayErrorMessage(e.getMessage());
+            exitMessage();
+        } catch (VendingMachinePersistenceException e) {
+            view.displayErrorMessage(e.getMessage());
             }
         }
     }
@@ -65,18 +69,20 @@ public class VendingMachineController {
     /* private int getMenuSelection() {
         return view.printMenuAndGetSelection();
     }*/
-    private void listItems() throws VendingMachineDaoException {
+     
+    private void listItems() throws VendingMachinePersistenceException {
         view.displayDisplayAllBanner();
-        List<Item> itemList = dao.getAllItems();
+        List<Item> itemList = service.getAllItems();
         view.displayItemList(itemList);
     }
 
-    private void viewItem() throws VendingMachineDaoException {
+    private void viewItem() throws VendingMachinePersistenceException {
         view.displayItemBanner();
         String itemName = view.getItemNameChoice();
-        Item item = dao.getItem(itemName);
+        Item item = service.getItem(itemName);
         view.displayItem(item);
     }
+    
     private void buyItem() {
         view.displayBuyItemBanner();
         String itemName = view.getItemNameChoice();
