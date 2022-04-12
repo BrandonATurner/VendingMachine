@@ -4,6 +4,7 @@
  */
 package vendingmachine.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 import vendingmachine.dao.VendingMachineDao;
 import vendingmachine.dao.VendingMachineDaoException;
@@ -24,13 +25,10 @@ public class VendingMachineController {
         this.view = view;
     }
 
-    
-
     public void run() {
         boolean keepGoing = true;
         int menuSelection;
-        
-        
+
         while (keepGoing) {
             menuSelection = view.printMenuAndGetSelection();
             try {
@@ -54,16 +52,17 @@ public class VendingMachineController {
                         unknownCommand();
                 }
 
-           
-            exitMessage();
-        } catch (VendingMachineDaoException e) {
-            view.displayErrorMessage(e.getMessage());
+                exitMessage();
+            } catch (VendingMachineDaoException e) {
+                view.displayErrorMessage(e.getMessage());
             }
-        }}
-        /* private int getMenuSelection() {
+        }
+    }
+
+    /* private int getMenuSelection() {
         return view.printMenuAndGetSelection();
     }*/
-        
+
     private void listItems() throws VendingMachineDaoException {
         view.displayDisplayAllBanner();
         List<Item> itemList = dao.getAllItems();
@@ -75,6 +74,12 @@ public class VendingMachineController {
         String itemName = view.getItemNameChoice();
         Item item = dao.getItem(itemName);
         view.displayItem(item);
+    }
+
+    private void showMoney() {
+        view.displayBalanceBanner();
+        BigDecimal balance = service.getBalance();
+        view.displayBalance(balance);
     }
 
     private void unknownCommand() {
