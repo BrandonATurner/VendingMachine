@@ -41,6 +41,22 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
         loadRoster();
         return items.get(itemName);
     }
+    
+    @Override
+    public Item decrementItem(String itemName)
+        throws VendingMachinePersistenceException{
+        
+        //Convert inventory string to int and decrement
+        Item decrementedItem = getItem(itemName);
+        int invAmount = Integer.parseInt(decrementedItem.getItemInventory());
+        invAmount--;
+        
+        //Return set new inventory amount and return decremented item to items map
+        decrementedItem.setItemInventory(Integer.toString(invAmount));
+        items.put(itemName, decrementedItem);
+        writeRoster();
+        return decrementedItem;
+    }
 
     private Item unmarshallItem(String itemAsText) {
         String[] itemTokens = itemAsText.split(DELIMITER);
