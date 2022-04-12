@@ -46,6 +46,9 @@ public class VendingMachineController {
                         displayBalance();
                         break;
                     case 5:
+                        buyItem();
+                        break;
+                    case 6:
                         keepGoing = false;
                         break;
                     default:
@@ -69,10 +72,17 @@ public class VendingMachineController {
     }
 
     private void viewItem() throws VendingMachineDaoException {
-        view.displayDisplayItemBanner();
+        view.displayItemBanner();
         String itemName = view.getItemNameChoice();
         Item item = dao.getItem(itemName);
         view.displayItem(item);
+    }
+    private void buyItem() {
+        view.displayBuyItemBanner();
+        String itemName = view.getItemNameChoice();
+        //service.buyItem(itemName);
+        view.displayBuyItemSuccessBanner();
+        
     }
 
     private void displayBalance() {
@@ -86,7 +96,7 @@ public class VendingMachineController {
         BigDecimal addedFunds = view.getAddedMoney();
         //service.updateBalance();
         view.displayAddMoneySuccessBanner();
-        
+
     }
 
     private void unknownCommand() {
