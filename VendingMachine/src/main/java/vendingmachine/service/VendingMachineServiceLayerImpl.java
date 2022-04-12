@@ -35,4 +35,16 @@ public class VendingMachineServiceLayerImpl implements VendingMachineServiceLaye
             VendingMachinePersistenceException {
         return dao.getItem(itemName);
     }
+    
+    @Override
+    public Item buyItem(String itemName) throws
+            VendingMachinePersistenceException,
+            NoItemInventoryException{
+            if (Integer.parseInt(dao.getItem(itemName).getItemInventory()) <= 0){
+            throw new NoItemInventoryException("This item is not in stock");
+            }
+            
+            
+        return dao.decrementItem(itemName);
+    }
 }

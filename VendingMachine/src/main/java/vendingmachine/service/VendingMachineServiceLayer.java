@@ -16,6 +16,10 @@ public interface VendingMachineServiceLayer {
 
     List<Item> getAllItems() throws
             VendingMachinePersistenceException;
+    
+    Item buyItem(String itemName) throws
+            VendingMachinePersistenceException,
+            NoItemInventoryException;
 
     Item getItem(String itemName) throws
             VendingMachinePersistenceException;
