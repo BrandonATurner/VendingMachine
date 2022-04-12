@@ -31,12 +31,13 @@ public class Change
     
     public void setChange()
         {
-            quarters = amount.divide(Denomination.QUARTER.value, 2, RoundingMode.DOWN);
-            dimes = (amount.divide(Denomination.QUARTER.value, 2, RoundingMode.DOWN)).divide(Denomination.DIME.value, 2, RoundingMode.DOWN);
-            nickels = ((amount.divide(Denomination.QUARTER.value, 2, RoundingMode.DOWN)).divide(Denomination.DIME.value, 2, RoundingMode.DOWN))
-                    .divide(Denomination.NICKEL.value, 2, RoundingMode.DOWN);
-            pennies = (((amount.divide(Denomination.QUARTER.value, 2, RoundingMode.DOWN)).divide(Denomination.DIME.value, 2, RoundingMode.DOWN))
-                    .divide(Denomination.NICKEL.value, 2, RoundingMode.DOWN)).divide(Denomination.PENNY.value, 0, RoundingMode.CEILING);
+            quarters = amount.divide(Denomination.QUARTER.value);
+            BigDecimal lessQuarters = amount.subtract(quarters.multiply(Denomination.QUARTER.value));
+            dimes = lessQuarters.divide(Denomination.QUARTER.value);
+            BigDecimal lessDimes = lessQuarters.subtract(dimes.multiply(Denomination.DIME.value));
+            nickels = lessDimes.divide(Denomination.QUARTER.value);
+            BigDecimal lessNickels = lessDimes.subtract(dimes.multiply(Denomination.DIME.value));
+            pennies = lessNickels.divide(Denomination.PENNY.value);
         }
     public String getChange()
         {
