@@ -40,13 +40,25 @@ public class VendingMachineServiceLayerImpl implements VendingMachineServiceLaye
     @Override
     public Item buyItem(String itemName) throws
             VendingMachinePersistenceException,
-            NoItemInventoryException {
-        if (Integer.parseInt(dao.getItem(itemName).getItemInventory()) <= 0) {
+            NoItemInventoryException,
+            InsufficientFundsException{
+        //Get item reference from dao
+        Item itemToBuy = dao.getItem(itemName);
+        
+        //Check that item is in stock and the user has sufficent funds to purchase
+        //item. Throw exception otherwise.
+        if (Integer.parseInt(itemToBuy.getItemInventory()) <= 0) {
             throw new NoItemInventoryException("This item is not in stock");
         }
+        else if (dao.getBalance().compareTo(itemToBuy.bigdecimalItemCost()) < 0){
+            throw new InsufficientFundsException("Insufficient Funds");
+        }
 
+        //Debit the item cost from the users balance.
+        BigDecimal newBalance =  dao.getBalance().subtract(itemToBuy.bigdecimalItemCost());
+        dao.updateBalance(newBalance);
+        
         return dao.decrementItem(itemName);
-
     }
 
     @Override

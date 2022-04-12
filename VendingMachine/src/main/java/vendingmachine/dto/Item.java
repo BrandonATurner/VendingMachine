@@ -42,5 +42,9 @@ public class Item {
 
     public void setItemInventory(String itemInventory) {
         this.itemInventory = itemInventory;
-    }   
+    }
+    
+    public BigDecimal bigdecimalItemCost(){
+        return new BigDecimal(itemCost);
+    }
 }

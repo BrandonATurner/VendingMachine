@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import vendingmachine.dao.VendingMachinePersistenceException;
 import vendingmachine.dto.Item;
+import vendingmachine.service.InsufficientFundsException;
 import vendingmachine.service.NoItemInventoryException;
 import vendingmachine.service.VendingMachineServiceLayer;
 import vendingmachine.ui.VendingMachineView;
@@ -58,7 +59,9 @@ public class VendingMachineController {
                 }
 
             exitMessage();
-        } catch (VendingMachinePersistenceException|NoItemInventoryException e) {
+        } catch (VendingMachinePersistenceException|
+                NoItemInventoryException|
+                InsufficientFundsException e) {
             view.displayErrorMessage(e.getMessage());
             }
         }
@@ -83,7 +86,9 @@ public class VendingMachineController {
         view.displayItem(item);
     }
     
-    private void buyItem() throws VendingMachinePersistenceException, NoItemInventoryException{
+    private void buyItem() throws VendingMachinePersistenceException,
+                            NoItemInventoryException,
+                            InsufficientFundsException{
         view.displayBuyItemBanner();
         String itemName = view.getItemNameChoice();
         service.buyItem(itemName);

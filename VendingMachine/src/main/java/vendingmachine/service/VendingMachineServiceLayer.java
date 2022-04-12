@@ -20,7 +20,8 @@ public interface VendingMachineServiceLayer {
     
     Item buyItem(String itemName) throws
             VendingMachinePersistenceException,
-            NoItemInventoryException;
+            NoItemInventoryException,
+            InsufficientFundsException;
 
     Item getItem(String itemName) throws
             VendingMachinePersistenceException;
