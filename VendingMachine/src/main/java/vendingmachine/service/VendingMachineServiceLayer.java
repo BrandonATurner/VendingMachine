@@ -4,6 +4,7 @@
  */
 package vendingmachine.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import vendingmachine.dao.VendingMachinePersistenceException;
 import vendingmachine.dto.Item;
@@ -19,5 +20,7 @@ public interface VendingMachineServiceLayer {
 
     Item getItem(String itemName) throws
             VendingMachinePersistenceException;
-
+    void buyItem(String itemName);
+    public void updateBalance(BigDecimal balance);
+    public BigDecimal getBalance();
 }

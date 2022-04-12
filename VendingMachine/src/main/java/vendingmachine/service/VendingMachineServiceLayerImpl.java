@@ -4,6 +4,7 @@
  */
 package vendingmachine.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import vendingmachine.dao.VendingMachineAuditDao;
 import vendingmachine.dao.VendingMachineDao;
@@ -34,5 +35,18 @@ public class VendingMachineServiceLayerImpl implements VendingMachineServiceLaye
     public Item getItem(String itemName) throws
             VendingMachinePersistenceException {
         return dao.getItem(itemName);
+    }
+
+    @Override
+    public void buyItem(String itemName) {
+        dao.buyItem(itemName);
+    }
+    @Override
+    public void updateBalance(BigDecimal balance) {
+        dao.updateBalance(balance);
+    }
+    @Override
+    public BigDecimal getBalance(){
+        return dao.getBalance();
     }
 }

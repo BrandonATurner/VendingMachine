@@ -10,12 +10,14 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import vendingmachine.dto.Item;
+import vendingmachine.dto.VendingMachine;
 
 /**
  *
@@ -27,6 +29,7 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
     public static final String DELIMITER = "::";
 
     private Map<String, Item> items = new HashMap<>();
+    private VendingMachine vm = new VendingMachine();
 
     @Override
     public List<Item> getAllItems()
@@ -40,6 +43,18 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
         throws VendingMachinePersistenceException {
         loadRoster();
         return items.get(itemName);
+    }
+    @Override
+    public void buyItem(String itemName){
+        
+    }
+    @Override
+    public BigDecimal getBalance(){
+        return vm.getBalance();
+    }
+    @Override
+    public void updateBalance(BigDecimal balance){
+        
     }
 
     private Item unmarshallItem(String itemAsText) {

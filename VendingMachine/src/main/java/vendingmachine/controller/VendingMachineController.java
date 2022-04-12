@@ -85,21 +85,21 @@ public class VendingMachineController {
     private void buyItem() {
         view.displayBuyItemBanner();
         String itemName = view.getItemNameChoice();
-        //service.buyItem(itemName);
+        service.buyItem(itemName);
         view.displayBuyItemSuccessBanner();
         
     }
 
     private void displayBalance() {
         view.displayBalanceBanner();
-        //BigDecimal balance = service.getBalance();
-        //view.displayBalance(balance);
+        BigDecimal balance = service.getBalance();
+        view.displayBalance(balance);
     }
 
     private void addMoney() {
         view.displayAddMoneyBanner();
         BigDecimal addedFunds = view.getAddedMoney();
-        //service.updateBalance();
+        service.updateBalance(addedFunds);
         view.displayAddMoneySuccessBanner();
 
     }
