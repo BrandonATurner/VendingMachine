@@ -43,7 +43,7 @@ public class VendingMachineController {
                         System.out.print("ADD MONEY");
                         break;
                     case 4:
-                        System.out.print("SHOW MONEY");
+                        displayBalance();
                         break;
                     case 5:
                         keepGoing = false;
@@ -76,7 +76,7 @@ public class VendingMachineController {
         view.displayItem(item);
     }
 
-    private void showMoney() {
+    private void displayBalance() {
         view.displayBalanceBanner();
         BigDecimal balance = service.getBalance();
         view.displayBalance(balance);
