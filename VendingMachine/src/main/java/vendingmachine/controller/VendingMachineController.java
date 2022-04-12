@@ -6,13 +6,10 @@ package vendingmachine.controller;
 
 import java.math.BigDecimal;
 import java.util.List;
-import vendingmachine.dao.VendingMachineDao;
+import java.util.stream.Collectors;
 import vendingmachine.dao.VendingMachinePersistenceException;
-import vendingmachine.dao.VendingMachineDaoFileImpl;
 import vendingmachine.dto.Item;
 import vendingmachine.service.VendingMachineServiceLayer;
-import vendingmachine.ui.UserIO;
-import vendingmachine.ui.UserIOConsoleImpl;
 import vendingmachine.ui.VendingMachineView;
 
 /**
@@ -72,7 +69,9 @@ public class VendingMachineController {
      
     private void listItems() throws VendingMachinePersistenceException {
         view.displayDisplayAllBanner();
-        List<Item> itemList = service.getAllItems();
+        List<Item> itemList = service.getAllItems().stream()
+                .filter((item) -> (Integer.parseInt(item.getItemInventory())) > 0)
+                .collect(Collectors.toList());
         view.displayItemList(itemList);
     }
 
