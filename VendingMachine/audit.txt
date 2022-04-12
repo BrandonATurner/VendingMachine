@@ -1,0 +1,2 @@
+2022-04-12T15:39:34.252477600 : Item Purchased: vendingmachine.dto.Item@2ef9b8bc
+2022-04-12T15:40:45.261781600 : Item Purchased: Sprite

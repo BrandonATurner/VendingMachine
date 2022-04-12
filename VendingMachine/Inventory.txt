@@ -1,4 +1,4 @@
-Sprite::1.51::94::
+Sprite::1.51::92::
 Herr's Chips::1.90::8::
 Honey Buns::2.25::0::
 Gummy Bears::4.70::11::

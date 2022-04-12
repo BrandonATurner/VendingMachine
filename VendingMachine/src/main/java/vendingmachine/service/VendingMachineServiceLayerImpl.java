@@ -57,7 +57,7 @@ public class VendingMachineServiceLayerImpl implements VendingMachineServiceLaye
         //Debit the item cost from the users balance.
         BigDecimal newBalance =  dao.getBalance().subtract(itemToBuy.bigdecimalItemCost());
         String change = dao.updateBalance(newBalance);
-        
+        auditDao.writeAuditEntry("Item Purchased: " + itemToBuy.getItemName());
         dao.decrementItem(itemName);
         return change;
     }
