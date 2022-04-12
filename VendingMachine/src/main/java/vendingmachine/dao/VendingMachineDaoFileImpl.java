@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import vendingmachine.dto.Change;
 import vendingmachine.dto.Item;
 import vendingmachine.dto.VendingMachine;
 
@@ -30,6 +31,7 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
 
     private Map<String, Item> items = new HashMap<>();
     private VendingMachine vm = new VendingMachine();
+    private Change change = new Change();
 
     @Override
     public List<Item> getAllItems()
@@ -46,7 +48,7 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
     }
     
     @Override
-    public Item decrementItem(String itemName)
+    public void decrementItem(String itemName)
         throws VendingMachinePersistenceException{
         
         //Convert inventory string to int and decrement
@@ -58,7 +60,7 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
         decrementedItem.setItemInventory(Integer.toString(invAmount));
         items.put(itemName, decrementedItem);
         writeRoster();
-        return decrementedItem;
+        //return decrementedItem;
     
     }
     
@@ -68,8 +70,11 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
         return vm.getBalance();
     }
     @Override
-    public void updateBalance(BigDecimal balance){
+    public String updateBalance(BigDecimal balance){
         vm.setBalance(balance);
+        change.setAmount(balance);
+        change.setChange();
+        return change.getChange();
     }
 
     private Item unmarshallItem(String itemAsText) {

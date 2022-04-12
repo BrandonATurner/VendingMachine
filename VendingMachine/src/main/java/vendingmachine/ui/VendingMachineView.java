@@ -43,6 +43,10 @@ public class VendingMachineView {
         io.readString("Please hit enter to continue.");
     }
 
+    public void displayChange(String change) {
+        io.print(change);
+    }
+
     public void displayBalance(BigDecimal balance) {
         io.print("The current balance is: " + balance);
     }
@@ -70,9 +74,11 @@ public class VendingMachineView {
     public void displayItemBanner() {
         io.print("=== Display Item ===");
     }
+
     public void displayBuyItemBanner() {
         io.print("=== Buy Item ===");
     }
+
     public void displayBuyItemSuccessBanner() {
         io.print("=== Item Purchased ===");
     }

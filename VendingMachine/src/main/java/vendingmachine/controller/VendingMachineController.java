@@ -58,19 +58,18 @@ public class VendingMachineController {
                         unknownCommand();
                 }
 
-            exitMessage();
-        } catch (VendingMachinePersistenceException|
-                NoItemInventoryException|
-                InsufficientFundsException e) {
-            view.displayErrorMessage(e.getMessage());
+            } catch (VendingMachinePersistenceException
+                    | NoItemInventoryException
+                    | InsufficientFundsException e) {
+                view.displayErrorMessage(e.getMessage());
             }
         }
+        exitMessage();
     }
 
     /* private int getMenuSelection() {
         return view.printMenuAndGetSelection();
     }*/
-     
     private void listItems() throws VendingMachinePersistenceException {
         view.displayDisplayAllBanner();
         List<Item> itemList = service.getAllItems().stream()
@@ -85,15 +84,16 @@ public class VendingMachineController {
         Item item = service.getItem(itemName);
         view.displayItem(item);
     }
-    
+
     private void buyItem() throws VendingMachinePersistenceException,
-                            NoItemInventoryException,
-                            InsufficientFundsException{
+            NoItemInventoryException,
+            InsufficientFundsException {
         view.displayBuyItemBanner();
         String itemName = view.getItemNameChoice();
-        service.buyItem(itemName);
+        String change = service.buyItem(itemName);
+        view.displayChange(change);
         view.displayBuyItemSuccessBanner();
-        
+
     }
 
     private void displayBalance() {

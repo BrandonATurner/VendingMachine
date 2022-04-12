@@ -38,7 +38,7 @@ public class VendingMachineServiceLayerImpl implements VendingMachineServiceLaye
     }
 
     @Override
-    public Item buyItem(String itemName) throws
+    public String buyItem(String itemName) throws
             VendingMachinePersistenceException,
             NoItemInventoryException,
             InsufficientFundsException{
@@ -56,14 +56,15 @@ public class VendingMachineServiceLayerImpl implements VendingMachineServiceLaye
 
         //Debit the item cost from the users balance.
         BigDecimal newBalance =  dao.getBalance().subtract(itemToBuy.bigdecimalItemCost());
-        dao.updateBalance(newBalance);
+        String change = dao.updateBalance(newBalance);
         
-        return dao.decrementItem(itemName);
+        dao.decrementItem(itemName);
+        return change;
     }
 
     @Override
-    public void updateBalance(BigDecimal balance) {
-        dao.updateBalance(balance);
+    public String updateBalance(BigDecimal balance) {
+        return dao.updateBalance(balance);
     }
 
     @Override

@@ -1,5 +1,5 @@
-Sprite::1.95::6::
+Sprite::1.51::94::
 Herr's Chips::1.90::8::
 Honey Buns::2.25::0::
 Gummy Bears::4.70::11::
-Cherry Pop Tarts::2.45::12::
+Cherry Pop Tarts::2.45::11::
