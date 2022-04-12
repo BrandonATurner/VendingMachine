@@ -77,14 +77,14 @@ public class VendingMachineController {
 
     private void displayBalance() {
         view.displayBalanceBanner();
-        BigDecimal balance = service.getBalance();
-        view.displayBalance(balance);
+        //BigDecimal balance = service.getBalance();
+        //view.displayBalance(balance);
     }
 
     private void addMoney() {
         view.displayAddMoneyBanner();
         BigDecimal addedFunds = view.getAddedMoney();
-        service.updateBalance();
+        //service.updateBalance();
         view.displayAddMoneySuccessBanner();
         
     }

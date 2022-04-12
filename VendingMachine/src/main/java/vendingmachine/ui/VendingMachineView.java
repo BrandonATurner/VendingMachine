@@ -41,15 +41,29 @@ public class VendingMachineView {
         }
         io.readString("Please hit enter to continue.");
     }
-    public void displayBalance(BigDecimal balance){
+
+    public void displayBalance(BigDecimal balance) {
         io.print("The current balance is: " + balance);
     }
+
     public void displayDisplayAllBanner() {
         io.print("=== Display All Items ===");
     }
 
     public void displayBalanceBanner() {
         io.print("=== Current Balance ===");
+    }
+
+    public void displayAddMoneyBanner() {
+        io.print("=== Add Funds ===");
+    }
+
+    public void displayAddMoneySuccessBanner() {
+        io.print("=== Funds Added ===");
+    }
+
+    public BigDecimal getAddedMoney() {
+        return io.readBigDecimal("How much money is being added?");
     }
 
     public void displayDisplayItemBanner() {
