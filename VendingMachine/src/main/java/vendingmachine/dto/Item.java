@@ -48,7 +48,7 @@ public class Item {
         return new BigDecimal(itemCost);
     }
 
-    //Overide the hash codes of the Item properties so they can be compared
+    //Override the hash codes of the Item properties so they can be compared
     //to other Item objects
     @Override
     public int hashCode() {
@@ -60,7 +60,7 @@ public class Item {
     }
 
     
-    //Overide the equals method to compare the state of this object with another 
+    //Override the equals method to compare the state of this object with another 
     //of type Item
     @Override
     public boolean equals(Object obj) {
