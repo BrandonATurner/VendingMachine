@@ -5,13 +5,10 @@
 package vendingmachine.service;
 
 import java.math.BigDecimal;
-import java.util.List;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import vendingmachine.dao.VendingMachineAuditDao;
+import vendingmachine.dao.VendingMachineDao;
 import vendingmachine.dto.Item;
 
 /**
@@ -19,24 +16,15 @@ import vendingmachine.dto.Item;
  * @author Rich
  */
 public class VendingMachineServiceLayerImplTest {
-    
+
+    private VendingMachineServiceLayer service;
+    VendingMachineDao dao;
+
     public VendingMachineServiceLayerImplTest() {
-    }
-    
-    @BeforeAll
-    public static void setUpClass() {
-    }
-    
-    @AfterAll
-    public static void tearDownClass() {
-    }
-    
-    @BeforeEach
-    public void setUp() {
-    }
-    
-    @AfterEach
-    public void tearDown() {
+        dao = new VendingMachineDaoStubImpl();
+        VendingMachineAuditDao auditDao = new VendingMachineAuditDaoStubImpl();
+
+        service = new VendingMachineServiceLayerImpl(dao, auditDao);
     }
 
     /**
@@ -44,13 +32,15 @@ public class VendingMachineServiceLayerImplTest {
      */
     @Test
     public void testGetAllItems() throws Exception {
-        System.out.println("getAllItems");
-        VendingMachineServiceLayerImpl instance = null;
-        List<Item> expResult = null;
-        List<Item> result = instance.getAllItems();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //Arrange
+        Item testClone = new Item("Test Snack");
+        testClone.setItemCost("1.25");
+        testClone.setItemInventory("5");
+
+        //Act & Assert
+        assertEquals(3, service.getAllItems().size(), "Three items should exist.");
+        assertTrue(service.getAllItems().contains(testClone), "The test snack should be in the list");
+
     }
 
     /**
@@ -58,14 +48,19 @@ public class VendingMachineServiceLayerImplTest {
      */
     @Test
     public void testGetItem() throws Exception {
-        System.out.println("getItem");
-        String itemName = "";
-        VendingMachineServiceLayerImpl instance = null;
-        Item expResult = null;
-        Item result = instance.getItem(itemName);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //Arrange
+        Item testClone = new Item("Test Snack");
+        testClone.setItemCost("1.25");
+        testClone.setItemInventory("5");
+
+        //Act & Assert
+        Item shouldBeTestClone = service.getItem("Test Snack");
+        assertNotNull(shouldBeTestClone, "The item returned by getItem() should not be null");
+        assertEquals(shouldBeTestClone, testClone, "The two items should be the same");
+
+        Item shouldBeNull = service.getItem("A Snack That Shouldn't Exist");//The service layer should not return an object that doesn't exist
+        assertNull(shouldBeNull);
+
     }
 
     /**
@@ -73,41 +68,39 @@ public class VendingMachineServiceLayerImplTest {
      */
     @Test
     public void testBuyItem() throws Exception {
-        System.out.println("buyItem");
-        String itemName = "";
-        VendingMachineServiceLayerImpl instance = null;
-        Item expResult = null;
-        Item result = instance.buyItem(itemName);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
-    /**
-     * Test of updateBalance method, of class VendingMachineServiceLayerImpl.
-     */
-    @Test
-    public void testUpdateBalance() {
-        System.out.println("updateBalance");
-        BigDecimal balance = null;
-        VendingMachineServiceLayerImpl instance = null;
-        instance.updateBalance(balance);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        //Assert that items with prices higher than your balance (10) cannot be purchased
+        try {
+            service.buyItem("Expensive Snack");
+            fail("Expected InsufficientFundsException");
+        } catch (InsufficientFundsException e) {
+        }
 
-    /**
-     * Test of getBalance method, of class VendingMachineServiceLayerImpl.
-     */
-    @Test
-    public void testGetBalance() {
-        System.out.println("getBalance");
-        VendingMachineServiceLayerImpl instance = null;
-        BigDecimal expResult = null;
-        BigDecimal result = instance.getBalance();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //Assert that it is not possible to buy nonexistant items
+        try {
+            service.buyItem("Nonexistant Item");
+            fail("Expected NullPointerException");
+        } catch (NullPointerException e) {
+        }
+
+        //Assert that items that are out of stock cannot be purchased
+        try {
+            service.buyItem("NoInv Snack");
+            fail("Expected NoItemInventoryException");
+        } catch (NoItemInventoryException e) {
+        }
+
+        //Assert that once funds have been adjusted to 20 you can purchase the expensive snack
+        BigDecimal sufficientBalance = new BigDecimal("20");
+        dao.updateBalance(sufficientBalance);
+        try {
+            service.buyItem("Expensive Snack");
+        } catch (InsufficientFundsException e) {
+            fail("Did not expect InsufficientFundsException");
+        }
+        
+        //Reset any changes to the state caused by purchasing items.
+        dao.getAllItems().clear();
+        dao.getAllItems();
     }
-    
 }

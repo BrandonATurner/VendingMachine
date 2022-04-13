@@ -5,13 +5,14 @@
 package vendingmachine.dto;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  *
  * @author andri
  */
 public class Item {
-    
+
     private String itemName;
     private String itemCost;
     private String itemInventory;
@@ -27,7 +28,6 @@ public class Item {
     /*public void setFirstName(String firstName) {
         this.firstName = firstName;
     }*/
-
     public String getItemCost() {
         return itemCost;
     }
@@ -43,8 +43,46 @@ public class Item {
     public void setItemInventory(String itemInventory) {
         this.itemInventory = itemInventory;
     }
-    
-    public BigDecimal bigdecimalItemCost(){
+
+    public BigDecimal bigdecimalItemCost() {
         return new BigDecimal(itemCost);
+    }
+
+    //Overide the hash codes of the Item properties so they can be compared
+    //to other Item objects
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 89 * hash + Objects.hashCode(this.itemName);
+        hash = 89 * hash + Objects.hashCode(this.itemCost);
+        hash = 89 * hash + Objects.hashCode(this.itemInventory);
+        return hash;
+    }
+
+    
+    //Overide the equals method to compare the state of this object with another 
+    //of type Item
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Item other = (Item) obj;
+        if (!Objects.equals(this.itemName, other.itemName)) {
+            return false;
+        }
+        if (!Objects.equals(this.itemCost, other.itemCost)) {
+            return false;
+        }
+        if (!Objects.equals(this.itemInventory, other.itemInventory)) {
+            return false;
+        }
+        return true;
     }
 }

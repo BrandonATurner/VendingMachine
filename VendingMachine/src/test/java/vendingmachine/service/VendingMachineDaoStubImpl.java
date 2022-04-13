@@ -20,21 +20,39 @@ import vendingmachine.dto.VendingMachine;
 public class VendingMachineDaoStubImpl implements VendingMachineDao {
 
     public Item testItem;
+    public Item testItemEmpty;
+    public Item testItemExpensive;
     public Change testChange = new Change();
     public VendingMachine testVm = new VendingMachine();
 
+    //Setup test items.
     public VendingMachineDaoStubImpl() {
         testItem = new Item("Test Snack");
         testItem.setItemCost("1.25");
         testItem.setItemInventory("5");
+        
+        testItemEmpty = new Item("NoInv Snack");
+        testItemEmpty.setItemCost("1.25");
+        testItemEmpty.setItemInventory("0");
 
+        testItemExpensive = new Item("Expensive Snack");
+        testItemExpensive.setItemCost("20");
+        testItemExpensive.setItemInventory("1");
+
+        //Setup vending machine with ten credits
         testVm.setBalance(BigDecimal.TEN);
+    }
+    
+    public VendingMachineDaoStubImpl(Item testItem) {
+        this.testItem = testItem;
     }
 
     @Override
     public List<Item> getAllItems() throws VendingMachinePersistenceException {
         List<Item> itemList = new ArrayList<>();
         itemList.add(testItem);
+        itemList.add(testItemEmpty);
+        itemList.add(testItemExpensive);
         return itemList;
     }
 
@@ -42,9 +60,16 @@ public class VendingMachineDaoStubImpl implements VendingMachineDao {
     public Item getItem(String itemName) throws VendingMachinePersistenceException {
         if (itemName.equals(testItem.getItemName())) {
             return testItem;
-        } else {
-            return null;
+        } 
+        else if(itemName.equals(testItemEmpty.getItemName())){
+            return testItemEmpty;
         }
+        else if(itemName.equals(testItemExpensive.getItemName())){
+            return testItemExpensive;
+        }
+        
+        return null;
+        
     }
 
     @Override
@@ -68,4 +93,5 @@ public class VendingMachineDaoStubImpl implements VendingMachineDao {
         return testVm.getBalance();
     }
 
+    
 }
